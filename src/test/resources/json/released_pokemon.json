@@ -1,0 +1,46 @@
+{
+  "1": {
+    "id": 1,
+    "name": "Bulbasaur"
+  },
+  "2": {
+    "id": 2,
+    "name": "Ivysaur"
+  },
+  "3": {
+    "id": 3,
+    "name": "Venusaur"
+  },
+  "4": {
+    "id": 4,
+    "name": "Charmander"
+  },
+  "5": {
+    "id": 5,
+    "name": "Charmeleon"
+  },
+  "6": {
+    "id": 6,
+    "name": "Charizard"
+  },
+  "7": {
+    "id": 7,
+    "name": "Squirtle"
+  },
+  "8": {
+    "id": 8,
+    "name": "Wartortle"
+  },
+  "9": {
+    "id": 9,
+    "name": "Blastoise"
+  },
+  "150": {
+    "id": 150,
+    "name": "Mewtwo"
+  },
+  "151": {
+    "id": 151,
+    "name": "Mew"
+  }
+}

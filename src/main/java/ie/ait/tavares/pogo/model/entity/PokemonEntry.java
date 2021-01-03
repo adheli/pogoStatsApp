@@ -19,16 +19,16 @@ import javax.persistence.ManyToOne;
 public class PokemonEntry {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-    @JoinColumn(name = "pokemon_id")
-    private Pokemon pokemon;
 
     @Column
     private Integer combatPower;
 
     @Column
     private boolean shiny;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "pokemon_id")
+    private Pokemon pokemon;
 }

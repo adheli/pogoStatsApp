@@ -3,15 +3,20 @@ package ie.ait.tavares.pogo.rapid.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.InvalidObjectException;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -36,9 +41,9 @@ public class PokemonGoApiService {
         HttpURLConnection connection = null;
         try {
             String url = String.join("", HTTPS_HOST_ADDRESS, jsonEndPoint);
-            log.debug("Request sent to URL: {}", url);
+            log.info("Request sent to URL: {}", url);
             connection = createConnection(url);
-            connection.setRequestProperty(keyName, keyValue);
+            connection.setRequestProperty(keyName, new String(Base64.getDecoder().decode(keyValue)));
             connection.setRequestProperty(hostName, hostValue);
 
             connection.setConnectTimeout(5000);
@@ -46,31 +51,35 @@ public class PokemonGoApiService {
 
             Reader streamReader;
 
-            log.debug("Response headers: {}", connection.getHeaderFields());
-            log.debug("Response code: {}", connection.getResponseCode());
+            log.info("Response headers: {}", connection.getHeaderFields());
+            log.info("Response code: {}", connection.getResponseCode());
 
             if (connection.getResponseCode() > 299) {
                 streamReader = new InputStreamReader(connection.getErrorStream());
+                throw new InvalidObjectException(getResponse(streamReader));
             } else {
                 streamReader = new InputStreamReader(connection.getInputStream());
+                return getResponse(streamReader);
             }
 
-
-            BufferedReader in = new BufferedReader(streamReader);
-            String inputLine;
-            StringBuilder content = new StringBuilder();
-            while ((inputLine = in.readLine()) != null) {
-                content.append(inputLine);
-            }
-            in.close();
-
-            log.debug("Response body: {}", content.toString());
-            return content.toString();
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
         }
+    }
+
+    private String getResponse(Reader streamReader) throws IOException {
+        BufferedReader in = new BufferedReader(streamReader);
+        String inputLine;
+        StringBuilder content = new StringBuilder();
+        while ((inputLine = in.readLine()) != null) {
+            content.append(inputLine);
+        }
+        in.close();
+
+        log.info("Response body: {}", content.toString());
+        return content.toString();
     }
 
     private HttpURLConnection createConnection(String urlString) throws IOException {
@@ -80,45 +89,81 @@ public class PokemonGoApiService {
         return connection;
     }
 
-    public List<PokemonGoApiModel> getPokemonList() {
+    public List<PokemonGoApiModel> getPokemonList() throws IOException {
         List<PokemonGoApiModel> pokemonList = new ArrayList<>();
+        Map<String, Object> pokemonMap;
         try {
             String content = processHttpCall("pokemon_names.json");
-            Map<String, Object> pokemonMap = mapper.readerForMapOf(PokemonGoApiModel.class).readValue(content);
-            if (!pokemonMap.isEmpty()) {
-                pokemonMap.values().forEach(pkm -> pokemonList.add((PokemonGoApiModel) pkm));
-            }
-
-            return pokemonList;
+            pokemonMap = mapper.readerForMapOf(PokemonGoApiModel.class).readValue(content);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
+            log.warn("Loading info from file");
+
+            File jsonFile = new ClassPathResource("json/pokemon_names.json").getFile();
+            pokemonMap = mapper.readerForMapOf(PokemonGoApiModel.class).readValue(jsonFile);
         }
-        return null;
+
+        if (!pokemonMap.isEmpty()) {
+            pokemonMap.values().forEach(pkm -> pokemonList.add((PokemonGoApiModel) pkm));
+        }
+
+        return pokemonList;
     }
 
-    public List<PokemonGoApiModel.Shiny> getShinyPokemonList() {
+    public List<PokemonGoApiModel.Shiny> getShinyPokemonList() throws IOException {
         List<PokemonGoApiModel.Shiny> shinyList = new ArrayList<>();
+        Map<String, Object> pokemonMap;
+
         try {
             String content = processHttpCall("shiny_pokemon.json");
-            Map<String, Object> pokemonMap = mapper.readerForMapOf(PokemonGoApiModel.Shiny.class).readValue(content);
-            if (!pokemonMap.isEmpty()) {
-                pokemonMap.values().forEach(pkm -> shinyList.add((PokemonGoApiModel.Shiny) pkm));
-            }
-
-            return shinyList;
+            pokemonMap = mapper.readerForMapOf(PokemonGoApiModel.Shiny.class).readValue(content);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
+            log.warn("Loading info from file");
+
+            File jsonFile = new ClassPathResource("json/shiny_pokemon.json").getFile();
+            pokemonMap = mapper.readerForMapOf(PokemonGoApiModel.Shiny.class).readValue(jsonFile);
         }
-        return null;
+
+        if (!pokemonMap.isEmpty()) {
+            pokemonMap.values().forEach(pkm -> shinyList.add((PokemonGoApiModel.Shiny) pkm));
+        }
+
+        return shinyList;
     }
 
-    public PokemonGoApiModel.RarityList getRarityPokemonList() {
+    public PokemonGoApiModel.RarityList getRarityPokemonList() throws IOException {
         try {
             String content = processHttpCall("pokemon_rarity.json");
             return mapper.readValue(content, PokemonGoApiModel.RarityList.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
+            log.warn("Loading info from file");
+
+            File jsonFile = new ClassPathResource("json/pokemon_rarity.json").getFile();
+            return mapper.readValue(jsonFile, PokemonGoApiModel.RarityList.class);
         }
-        return null;
+    }
+
+    public List<PokemonGoApiModel> getReleasedPokemonList() throws IOException {
+        List<PokemonGoApiModel> pokemonList = new ArrayList<>();
+        Map<String, Object> pokemonMap;
+
+        try {
+            String content = processHttpCall("released_pokemon.json");
+            pokemonMap = mapper.readerForMapOf(PokemonGoApiModel.class).readValue(content);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+            log.warn("Loading info from file");
+
+            File jsonFile = new ClassPathResource("json/released_pokemon.json").getFile();
+            pokemonMap = mapper.readerForMapOf(PokemonGoApiModel.class).readValue(jsonFile);
+        }
+
+        if (!pokemonMap.isEmpty()) {
+            pokemonMap.values().forEach(pkm -> pokemonList.add((PokemonGoApiModel) pkm));
+        }
+
+        return pokemonList;
     }
 }

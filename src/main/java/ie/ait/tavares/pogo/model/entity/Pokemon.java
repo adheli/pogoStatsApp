@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +17,7 @@ import javax.persistence.Id;
 public class Pokemon {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Integer id;
 
     @Column(nullable = false, unique = true)
@@ -31,5 +33,9 @@ public class Pokemon {
     private boolean released;
 
     @Column(nullable = false)
-    private boolean shinyReleased;
+    private boolean shinyReleased;;
+
+    @OneToMany(mappedBy = "pokemon")
+    private List<PokemonEntry> entries;
+
 }

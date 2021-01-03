@@ -1,0 +1,92 @@
+{
+  "1": {
+    "found_egg": true,
+    "found_evolution": false,
+    "found_raid": false,
+    "found_research": false,
+    "found_wild": false,
+    "id": 1,
+    "name": "Bulbasaur"
+  },
+  "2": {
+    "found_egg": false,
+    "found_evolution": true,
+    "found_raid": false,
+    "found_research": false,
+    "found_wild": false,
+    "id": 2,
+    "name": "Ivysaur"
+  },
+  "3": {
+    "found_egg": false,
+    "found_evolution": true,
+    "found_raid": true,
+    "found_research": true,
+    "found_wild": false,
+    "id": 3,
+    "name": "Venusaur"
+  },
+  "4": {
+    "found_egg": true,
+    "found_evolution": false,
+    "found_raid": false,
+    "found_research": true,
+    "found_wild": true,
+    "id": 4,
+    "name": "Charmander"
+  },
+  "5": {
+    "found_egg": false,
+    "found_evolution": true,
+    "found_raid": false,
+    "found_research": false,
+    "found_wild": false,
+    "id": 5,
+    "name": "Charmeleon"
+  },
+  "6": {
+    "found_egg": false,
+    "found_evolution": true,
+    "found_raid": true,
+    "found_research": true,
+    "found_wild": false,
+    "id": 6,
+    "name": "Charizard"
+  },
+  "7": {
+    "found_egg": true,
+    "found_evolution": false,
+    "found_raid": false,
+    "found_research": true,
+    "found_wild": true,
+    "id": 7,
+    "name": "Squirtle"
+  },
+  "8": {
+    "found_egg": false,
+    "found_evolution": true,
+    "found_raid": false,
+    "found_research": false,
+    "found_wild": false,
+    "id": 8,
+    "name": "Wartortle"
+  },
+  "9": {
+    "found_egg": false,
+    "found_evolution": true,
+    "found_raid": true,
+    "found_research": true,
+    "found_wild": false,
+    "id": 9,
+    "name": "Blastoise"
+  },
+  "150": {
+    "found_egg": false,
+    "found_evolution": false,
+    "found_raid": true,
+    "found_research": false,
+    "found_wild": false,
+    "id": 150,
+    "name": "Mewtwo"
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "Legendary": [
+    {
+      "form": "A",
+      "pokemon_id": 150,
+      "pokemon_name": "Mewtwo",
+      "rarity": "Legendary"
+    },
+    {
+      "form": "Normal",
+      "pokemon_id": 150,
+      "pokemon_name": "Mewtwo",
+      "rarity": "Legendary"
+    },
+    {
+      "form": "Purified",
+      "pokemon_id": 150,
+      "pokemon_name": "Mewtwo",
+      "rarity": "Legendary"
+    },
+    {
+      "form": "Shadow",
+      "pokemon_id": 150,
+      "pokemon_name": "Mewtwo",
+      "rarity": "Legendary"
+    }
+  ],
+  "Mythic": [
+    {
+      "form": "Normal",
+      "pokemon_id": 151,
+      "pokemon_name": "Mew",
+      "rarity": "Mythic"
+    }
+  ],
+  "Standard": [
+    {
+      "form": "Fall_2019",
+      "pokemon_id": 1,
+      "pokemon_name": "Bulbasaur",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Normal",
+      "pokemon_id": 1,
+      "pokemon_name": "Bulbasaur",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Purified",
+      "pokemon_id": 1,
+      "pokemon_name": "Bulbasaur",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Shadow",
+      "pokemon_id": 1,
+      "pokemon_name": "Bulbasaur",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Normal",
+      "pokemon_id": 2,
+      "pokemon_name": "Ivysaur",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Purified",
+      "pokemon_id": 2,
+      "pokemon_name": "Ivysaur",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Shadow",
+      "pokemon_id": 2,
+      "pokemon_name": "Ivysaur",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Copy_2019",
+      "pokemon_id": 3,
+      "pokemon_name": "Venusaur",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Normal",
+      "pokemon_id": 3,
+      "pokemon_name": "Venusaur",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Purified",
+      "pokemon_id": 3,
+      "pokemon_name": "Venusaur",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Shadow",
+      "pokemon_id": 3,
+      "pokemon_name": "Venusaur",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Fall_2019",
+      "pokemon_id": 4,
+      "pokemon_name": "Charmander",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Normal",
+      "pokemon_id": 4,
+      "pokemon_name": "Charmander",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Purified",
+      "pokemon_id": 4,
+      "pokemon_name": "Charmander",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Shadow",
+      "pokemon_id": 4,
+      "pokemon_name": "Charmander",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Normal",
+      "pokemon_id": 5,
+      "pokemon_name": "Charmeleon",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Purified",
+      "pokemon_id": 5,
+      "pokemon_name": "Charmeleon",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Shadow",
+      "pokemon_id": 5,
+      "pokemon_name": "Charmeleon",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Copy_2019",
+      "pokemon_id": 6,
+      "pokemon_name": "Charizard",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Normal",
+      "pokemon_id": 6,
+      "pokemon_name": "Charizard",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Purified",
+      "pokemon_id": 6,
+      "pokemon_name": "Charizard",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Shadow",
+      "pokemon_id": 6,
+      "pokemon_name": "Charizard",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Fall_2019",
+      "pokemon_id": 7,
+      "pokemon_name": "Squirtle",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Normal",
+      "pokemon_id": 7,
+      "pokemon_name": "Squirtle",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Purified",
+      "pokemon_id": 7,
+      "pokemon_name": "Squirtle",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Shadow",
+      "pokemon_id": 7,
+      "pokemon_name": "Squirtle",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Normal",
+      "pokemon_id": 8,
+      "pokemon_name": "Wartortle",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Purified",
+      "pokemon_id": 8,
+      "pokemon_name": "Wartortle",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Shadow",
+      "pokemon_id": 8,
+      "pokemon_name": "Wartortle",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Copy_2019",
+      "pokemon_id": 9,
+      "pokemon_name": "Blastoise",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Normal",
+      "pokemon_id": 9,
+      "pokemon_name": "Blastoise",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Purified",
+      "pokemon_id": 9,
+      "pokemon_name": "Blastoise",
+      "rarity": "Standard"
+    },
+    {
+      "form": "Shadow",
+      "pokemon_id": 9,
+      "pokemon_name": "Blastoise",
+      "rarity": "Standard"
+    }
+  ]
+}

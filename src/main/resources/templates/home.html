@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>PoGo Stats</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row">
+        <p>Welcome to PoGo Stats</p>
+    </div>
+
+    <div class="row">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <a class="btn btn-outline-primary" href="#" th:href="@{/pokemon}">All Pokemons</a>
+            <a class="btn btn-outline-success" href="#" th:href="@{/pokemon}">Your Pokemons</a>
+            <a class="btn btn-outline-danger" href="#" th:href="@{/pokemon}">Leagues</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <p>Adheli Tavares. 2021. MIT License</p>
+    </div>
+</div>
+</body>
+</html>

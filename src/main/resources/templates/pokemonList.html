@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>PoGo Stats</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="row">
+        <div th:if="${#lists.isEmpty(pokemons)}">
+            <p>
+                <a class="btn btn-primary" href="pokemonList.html" th:href="@{/pokemon/load}">Load Pokemon Data</a>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <p>
+            <a href="../home.html" th:href="@{/}">Return to home</a>
+        </p>
+    </div>
+</div>
+
+<div class="container" th:if="${not #lists.isEmpty(pokemons)}">
+    <div class="row">
+        <h1>All Pokemons</h1>
+    </div>
+    <div class="row">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>POKEDEX #</th>
+                <th>NAME</th>
+                <th>RELEASED</th>
+                <th>LEGENDARY</th>
+                <th>SHINY</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pokemon : ${pokemons}">
+                <td th:text="${pokemon.dexEntry}"></td>
+                <td th:text="${pokemon.name}">me</td>
+                <td th:if="${#bools.isTrue(pokemon.released)}"><i class="far fa-calendar-check text-success"></i></td>
+                <td th:unless="${#bools.isTrue(pokemon.released)}"></td>
+                <td th:if="${#bools.isTrue(pokemon.legendary)}"><i class="fab fa-github text-secondary"></i></td>
+                <td th:unless="${#bools.isTrue(pokemon.legendary)}"></td>
+                <td><i class="fas fa-gem text-warning" th:if="${#bools.isTrue(pokemon.shinyReleased)}"></i></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<p>Adheli Tavares. 2021. MIT License</p>
+
+</body>
+
+</html>

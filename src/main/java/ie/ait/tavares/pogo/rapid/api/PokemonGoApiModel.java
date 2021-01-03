@@ -1,5 +1,6 @@
 package ie.ait.tavares.pogo.rapid.api;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -23,7 +24,7 @@ public class PokemonGoApiModel {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Getter
     @Setter
-    static class Shiny extends PokemonGoApiModel {
+    public static class Shiny extends PokemonGoApiModel {
         @JsonProperty("found_egg")
         private boolean egg;
         @JsonProperty("found_evolution")
@@ -36,13 +37,18 @@ public class PokemonGoApiModel {
         private boolean wild;
         @JsonProperty("alolan_shiny")
         private boolean alolan;
+
+        @JsonIgnore
+        public boolean isOriginalShiny() {
+            return (egg || raid || research || wild || alolan);
+        }
     }
 
     @JsonSerialize
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Getter
     @Setter
-    static class Rarity {
+    public static class Rarity {
         @JsonProperty("form")
         private String form;
         @JsonProperty("rarity")
@@ -57,7 +63,7 @@ public class PokemonGoApiModel {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Getter
     @Setter
-    static class RarityList {
+    public static class RarityList {
         @JsonProperty("Legendary")
         List<Rarity> legendary;
         @JsonProperty("Mythic")
