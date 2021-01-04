@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>PoGo Stats</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#" th:href="@{/home}"> PoGo Stats</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/pokemon}">All Pokemons</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/myPokemon}">My Pokemons</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/leagues}">Leagues</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container" style="padding-top: 10%;">
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <a class="btn btn-outline-success" th:href="@{/myPokemon/add}">Add Pokemon Entry</a>
+    </div>
+
+    <div class="container" th:if="${not #lists.isEmpty(pokemons)}">
+        <div class="row">
+            <h2>My Pokemons</h2>
+        </div>
+        <div class="row">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ENTRY #</th>
+                    <th>NAME</th>
+                    <th>CP</th>
+                    <th>SHINY</th>
+                    <th>*</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="entry : ${pokemons}">
+                    <td th:text="${entry.entryId}"></td>
+                    <td th:text="${entry.pokemonName}">me</td>
+                    <td th:text="${entry.currentCp}">me</td>
+                    <td><i class="fas fa-gem text-warning" th:if="${#bools.isTrue(entry.shiny)}"></i></td>
+                    <td>
+                        <a href="#" th:href="@{'/myPokemon/edit/' + ${entry.entryId}}">edit</a>
+                        <a href="#" th:href="@{'/myPokemon/delete/' + ${entry.entryId}}">delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted">Adheli Tavares. 2021. MIT License</span>
+    </div>
+</footer>
+
+</body>
+
+</html>

@@ -6,9 +6,11 @@
     <title>PoGo Stats</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
-<body>
 
+<body>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="#" th:href="@{/home}"> PoGo Stats</a>
@@ -32,13 +34,40 @@
     </nav>
 </header>
 
-<main role="main" class="container" style="padding-top: 10%;">
-    <div class="container">
+<div class="container" style="padding-top: 10%;">
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <a class="btn btn-outline-success" th:href="@{/league/great}">Great League</a>
+        <a class="btn btn-outline-primary" th:href="@{/league/ultra}">Ultra League</a>
+        <a class="btn btn-outline-danger" th:href="@{/league/master}">Master League</a>
+    </div>
+
+    <div class="container" th:if="${not #lists.isEmpty(pokemons)}">
         <div class="row">
-            <p class="lead">Welcome to PoGo Stats!!!</p>
+            <h1>My Pokemons</h1>
+        </div>
+        <div class="row">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ENTRY #</th>
+                    <th>NAME</th>
+                    <th>CP</th>
+                    <th>SHINY</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="entry : ${pokemons}">
+                    <td th:text="${entry.entryId}"></td>
+                    <td th:text="${entry.pokemonName}">me</td>
+                    <td th:text="${entry.currentCp}">me</td>
+                    <td><i class="fas fa-gem text-warning" th:if="${#bools.isTrue(entry.shinyReleased)}"></i></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</main>
+</div>
+
 <footer class="footer">
     <div class="container">
         <span class="text-muted">Adheli Tavares. 2021. MIT License</span>

@@ -33,8 +33,11 @@ public class PokemonControllerImpl implements PokemonController {
     public String createPokemonData(Model model) {
         log.info("Loading data from API");
         try {
-            loadPokemonFromApi();
             List<PokemonDto> pokemons = getPokemons();
+            if (pokemons.isEmpty()) {
+                loadPokemonFromApi();
+                pokemons = getPokemons();
+            }
             model.addAttribute("pokemons", pokemons);
             return "redirect:/pokemon";
         } catch (IOException e) {

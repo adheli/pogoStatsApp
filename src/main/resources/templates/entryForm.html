@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>PoGo Stats</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#" th:href="@{/home}"> PoGo Stats</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/pokemon}">All Pokemons</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/myPokemon}">My Pokemons</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/leagues}">Leagues</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container" style="padding-top: 10%;">
+    <div class="row">
+        <h2><span th:utext="${action}"></span> Pokemon Entry</h2>
+
+        <div th:if="${#strings.equalsIgnoreCase('add', action)}">
+            <form class="row" action="#" th:action="@{/myPokemon}" th:object="${entry}" method="post">
+                <div>
+                    <label for="pokemonList" class="form-label">Pokemon</label>
+                    <input th:field="*{pokemonId}" class="form-control" list="datalistOptions" id="pokemonList" placeholder="Type to search...">
+                    <datalist id="datalistOptions">
+                        <option th:each="pokemon : ${pokemons}" th:value="${pokemon.id}" th:text="${pokemon.name}">
+                        </option>
+                    </datalist>
+                </div>
+                <div>
+                    <label for="cpInput" class="form-label">Combat Power (CP)</label>
+                    <input id="cpInput" type="text" class="form-control" th:field="*{currentCp}">
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gridCheck" th:field="*{shiny}">
+                    <label class="form-check-label" for="gridCheck">
+                        Shiny
+                    </label>
+                </div>
+                <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+            </form>
+        </div>
+
+        <div th:if="${#strings.equalsIgnoreCase('edit', action)}">
+            <form class="row" action="#" th:action="@{/myPokemon}" th:object="${entry}" method="post">
+                <input type="text" hidden th:field="*{entryId}"/>
+                <input type="text" hidden th:field="*{pokemonId}"/>
+                <p>Pokemon: <input type="text" disabled th:field="*{pokemonName}"/></p>
+                <p>Shiny: <input type="checkbox" disabled th:field="*{shiny}"/></p>
+                <p>Combat Power (CP): <input type="text" th:field="*{currentCp}"/></p>
+                <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted">Adheli Tavares. 2021. MIT License</span>
+    </div>
+</footer>
+</body>
+</html>
