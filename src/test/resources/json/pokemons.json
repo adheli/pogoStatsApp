@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "dexEntry": 1,
+    "name": "Bulbasaur",
+    "legendary": false,
+    "released": true,
+    "shinyReleased": true
+  },
+  {
+    "id": 2,
+    "dexEntry": 2,
+    "name": "Ivysaur",
+    "legendary": false,
+    "released": true,
+    "shinyReleased": false
+  },
+  {
+    "id": 3,
+    "dexEntry": 3,
+    "name": "Venusaur",
+    "legendary": false,
+    "released": true,
+    "shinyReleased": true
+  },
+  {
+    "id": 4,
+    "dexEntry": 4,
+    "name": "Charmander",
+    "legendary": false,
+    "released": true,
+    "shinyReleased": true
+  },
+  {
+    "id": 5,
+    "dexEntry": 5,
+    "name": "Charmeleon",
+    "legendary": false,
+    "released": true,
+    "shinyReleased": false
+  },
+  {
+    "id": 6,
+    "dexEntry": 6,
+    "name": "Charizard",
+    "legendary": false,
+    "released": true,
+    "shinyReleased": true
+  },
+  {
+    "id": 7,
+    "dexEntry": 7,
+    "name": "Squirtle",
+    "legendary": false,
+    "released": true,
+    "shinyReleased": true
+  },
+  {
+    "id": 8,
+    "dexEntry": 8,
+    "name": "Wartortle",
+    "legendary": false,
+    "released": true,
+    "shinyReleased": false
+  },
+  {
+    "id": 9,
+    "dexEntry": 9,
+    "name": "Blastoise",
+    "legendary": false,
+    "released": true,
+    "shinyReleased": true
+  },
+  {
+    "id": 150,
+    "dexEntry": 150,
+    "name": "Mewtwo",
+    "legendary": true,
+    "released": true,
+    "shinyReleased": true
+  },
+  {
+    "id": 151,
+    "dexEntry": 151,
+    "name": "Mew",
+    "legendary": true,
+    "released": true,
+    "shinyReleased": false
+  }
+]

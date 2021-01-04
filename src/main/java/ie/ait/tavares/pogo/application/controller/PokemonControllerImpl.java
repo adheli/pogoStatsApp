@@ -47,13 +47,6 @@ public class PokemonControllerImpl implements PokemonController {
     }
 
     @Override
-    public String refreshPokemonData(Model model) {
-        List<PokemonDto> pokemons = getPokemons();
-        model.addAttribute("pokemons", pokemons);
-        return POKEMON_LIST_PAGE;
-    }
-
-    @Override
     public String getPokemonList(Model model) {
         List<PokemonDto> pokemons = getPokemons();
         model.addAttribute("pokemons", pokemons);
@@ -134,11 +127,11 @@ public class PokemonControllerImpl implements PokemonController {
             service.getPokemonList().forEach(p -> list.add(new PokemonDto(p)));
         } else {
             if (onlyLegendary) {
-                service.getLegendaryPokemonList().forEach(p -> list.add(p.getDexEntry(), new PokemonDto(p)));
+                service.getLegendaryPokemonList().forEach(p -> list.add(new PokemonDto(p)));
             } else if (onlyReleased) {
-                service.getReleasedPokemonList().forEach(p -> list.add(p.getDexEntry(), new PokemonDto(p)));
+                service.getReleasedPokemonList().forEach(p -> list.add(new PokemonDto(p)));
             } else if (onlyShiny) {
-                service.getShinyPokemonList().forEach(p -> list.add(p.getDexEntry(), new PokemonDto(p)));
+                service.getShinyPokemonList().forEach(p -> list.add(new PokemonDto(p)));
             }
         }
 
@@ -150,11 +143,11 @@ public class PokemonControllerImpl implements PokemonController {
     }
 
     private List<PokemonDto> getShinyPokemons() {
-        return getPokemons(false, false, true, true);
+        return getPokemons(false, false, false, true);
     }
 
     private List<PokemonDto> getLegendaryPokemons() {
-        return getPokemons(false, true, true, false);
+        return getPokemons(false, true, false, false);
     }
 
     private List<PokemonDto> getOnlyReleasedPokemons() {

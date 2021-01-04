@@ -1,0 +1,106 @@
+[
+  {
+    "id": 1,
+    "combatPower": 320,
+    "shiny": true,
+    "pokemon": {
+      "id": 1,
+      "dexEntry": 1,
+      "name": "Bulbasaur",
+      "legendary": false,
+      "released": true,
+      "shinyReleased": true
+    }
+  },
+  {
+    "id": 2,
+    "combatPower": 840,
+    "shiny": false,
+    "pokemon": {
+      "id": 2,
+      "dexEntry": 2,
+      "name": "Ivysaur",
+      "legendary": false,
+      "released": true,
+      "shinyReleased": false
+    }
+  },
+  {
+    "id": 3,
+    "combatPower": 1320,
+    "shiny": true,
+    "pokemon": {
+      "id": 3,
+      "dexEntry": 3,
+      "name": "Venusaur",
+      "legendary": false,
+      "released": true,
+      "shinyReleased": true
+    }
+  },
+  {
+    "id": 4,
+    "combatPower": 2400,
+    "shiny": false,
+    "pokemon": {
+      "id": 6,
+      "dexEntry": 6,
+      "name": "Charizard",
+      "legendary": false,
+      "released": true,
+      "shinyReleased": true
+    }
+  },
+  {
+    "id": 5,
+    "combatPower": 1200,
+    "shiny": false,
+    "pokemon": {
+      "id": 8,
+      "dexEntry": 8,
+      "name": "Wartortle",
+      "legendary": false,
+      "released": true,
+      "shinyReleased": false
+    }
+  },
+  {
+    "id": 6,
+    "combatPower": 3200,
+    "shiny": true,
+    "pokemon": {
+      "id": 9,
+      "dexEntry": 9,
+      "name": "Blastoise",
+      "legendary": false,
+      "released": true,
+      "shinyReleased": true
+    }
+  },
+  {
+    "id": 7,
+    "combatPower": 4158,
+    "shiny": true,
+    "pokemon": {
+      "id": 150,
+      "dexEntry": 150,
+      "name": "Mewtwo",
+      "legendary": true,
+      "released": true,
+      "shinyReleased": true
+    }
+  },
+  {
+    "id": 1,
+    "combatPower": 2100,
+    "shiny": false,
+    "pokemon": {
+      "id": 151,
+      "dexEntry": 151,
+      "name": "Mew",
+      "legendary": true,
+      "released": true,
+      "shinyReleased": false
+    }
+  }
+]

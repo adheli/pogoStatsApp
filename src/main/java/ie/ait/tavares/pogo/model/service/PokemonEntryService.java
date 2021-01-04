@@ -1,8 +1,6 @@
 package ie.ait.tavares.pogo.model.service;
 
-import ie.ait.tavares.pogo.model.dao.PokemonDao;
 import ie.ait.tavares.pogo.model.dao.PokemonEntryDao;
-import ie.ait.tavares.pogo.model.entity.Pokemon;
 import ie.ait.tavares.pogo.model.entity.PokemonEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

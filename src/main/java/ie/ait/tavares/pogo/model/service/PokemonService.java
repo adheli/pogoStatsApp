@@ -5,7 +5,9 @@ import ie.ait.tavares.pogo.model.entity.Pokemon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PokemonService {
@@ -26,7 +28,7 @@ public class PokemonService {
     }
 
     public List<Pokemon> getPokemonList() {
-        return pokemonDao.findAll();
+        return Optional.of(pokemonDao.findAll()).orElse(new ArrayList<>());
     }
 
     public List<Pokemon> getLegendaryPokemonList() {
@@ -39,9 +41,5 @@ public class PokemonService {
 
     public List<Pokemon> getReleasedPokemonList() {
         return pokemonDao.findReleased();
-    }
-
-    public void deletePokemon(Integer pokemonId) {
-        pokemonDao.deleteById(pokemonId);
     }
 }

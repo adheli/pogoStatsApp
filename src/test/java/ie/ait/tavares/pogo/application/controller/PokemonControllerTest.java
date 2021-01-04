@@ -1,23 +1,138 @@
 package ie.ait.tavares.pogo.application.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ie.ait.tavares.pogo.application.dto.PokemonDto;
+import ie.ait.tavares.pogo.model.entity.Pokemon;
+import ie.ait.tavares.pogo.model.service.PokemonService;
+import ie.ait.tavares.pogo.rapid.api.PokemonGoApiModel;
+import ie.ait.tavares.pogo.rapid.api.PokemonGoApiService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 @SpringBootTest
 @ActiveProfiles("test")
-public class PokemonControllerTest {
+class PokemonControllerTest {
+    @MockBean
+    PokemonService service;
+
+    @MockBean
+    PokemonGoApiService api;
 
     @Autowired
-    PokemonController controller;
+    PokemonControllerImpl controller;
 
     Model model = new ConcurrentModel();
 
     @Test
-    void testLoadPokemonData() {
-//        controller.createPokemonData(model);
+    void createPokemonData() throws IOException {
+        Mockito.when(service.getPokemonList()).thenReturn(new ArrayList<>()).thenReturn(mockListSavedPokemon());
+        Mockito.when(api.getPokemonList()).thenReturn(mockOriginalPokemonList());
+        Mockito.when(api.getShinyPokemonList()).thenReturn(mockShinyList());
+        Mockito.when(api.getReleasedPokemonList()).thenReturn(mockReleasedPokemon());
+        Mockito.when(api.getRarityPokemonList()).thenReturn(mockRarityList());
+
+        controller.createPokemonData(model);
+        Assertions.assertNotNull(model);
+        Assertions.assertNotNull(model.getAttribute("pokemons"));
     }
+
+    @Test
+    void getPokemonList() throws IOException {
+        Mockito.when(service.getPokemonList()).thenReturn(mockListSavedPokemon());
+
+        controller.getPokemonList(model);
+        Assertions.assertNotNull(model);
+        Assertions.assertNotNull(model.getAttribute("pokemons"));
+    }
+
+    @Test
+    void testGetLegendary() throws IOException {
+        Mockito.when(service.getLegendaryPokemonList()).thenReturn(mockListSavedPokemon().stream().filter(Pokemon::isLegendary).collect(Collectors.toList()));
+
+        controller.getLegendary(model);
+        Assertions.assertNotNull(model);
+
+        List<Pokemon> list = (List<Pokemon>) model.getAttribute("pokemons");
+        Assertions.assertNotNull(list);
+        Assertions.assertEquals(2, list.size());
+    }
+
+    @Test
+    void testGetShiny() throws IOException {
+        Mockito.when(service.getShinyPokemonList()).thenReturn(mockListSavedPokemon().stream().filter(Pokemon::isShinyReleased).collect(Collectors.toList()));
+
+        controller.getShiny(model);
+        Assertions.assertNotNull(model);
+
+        List<Pokemon> list = (List<Pokemon>) model.getAttribute("pokemons");
+        Assertions.assertNotNull(list);
+        Assertions.assertEquals(7, list.size());
+    }
+
+    @Test
+    void testGetReleased() throws IOException {
+        Mockito.when(service.getReleasedPokemonList()).thenReturn(mockListSavedPokemon().stream().filter(Pokemon::isReleased).collect(Collectors.toList()));
+
+        controller.getReleased(model);
+        Assertions.assertNotNull(model);
+
+        List<Pokemon> list = (List<Pokemon>) model.getAttribute("pokemons");
+        Assertions.assertNotNull(list);
+        Assertions.assertEquals(11, list.size());
+    }
+
+
+    private Map<String, Object> getMapValues(Class<?> clazz, String jsonFilePath) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        File jsonFile = new ClassPathResource(jsonFilePath).getFile();
+        return mapper.readerForMapOf(clazz).readValue(jsonFile);
+    }
+
+    private List<PokemonGoApiModel.Shiny> mockShinyList() throws IOException {
+        List<PokemonGoApiModel.Shiny> shinyList = new ArrayList<>();
+        getMapValues(PokemonGoApiModel.Shiny.class, "json/shiny_pokemon.json")
+                .values().forEach(pkm -> shinyList.add((PokemonGoApiModel.Shiny) pkm));
+        return shinyList;
+    }
+
+    private List<PokemonGoApiModel> mockOriginalPokemonList() throws IOException {
+        List<PokemonGoApiModel> pokemonList = new ArrayList<>();
+        getMapValues(PokemonGoApiModel.class, "json/pokemon_names.json")
+                .values().forEach(pkm -> pokemonList.add((PokemonGoApiModel) pkm));
+        return pokemonList;
+    }
+
+    private List<PokemonGoApiModel> mockReleasedPokemon() throws IOException {
+        List<PokemonGoApiModel> releasedPokemon = new ArrayList<>();
+        getMapValues(PokemonGoApiModel.class, "json/released_pokemon.json")
+                .values().forEach(pkm -> releasedPokemon.add((PokemonGoApiModel) pkm));
+        return releasedPokemon;
+    }
+
+    private PokemonGoApiModel.RarityList mockRarityList() throws IOException {
+        File rarityFile = new ClassPathResource("json/pokemon_rarity.json").getFile();
+        return new ObjectMapper().readValue(rarityFile, PokemonGoApiModel.RarityList.class);
+    }
+
+    private List<Pokemon> mockListSavedPokemon() throws IOException {
+        File pokemonSaved = new ClassPathResource("json/pokemons.json").getFile();
+        return new ObjectMapper().readerForListOf(Pokemon.class).readValue(pokemonSaved);
+    }
+
+
 }

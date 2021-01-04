@@ -12,9 +12,6 @@ public interface PokemonController {
     @GetMapping("/load")
     String createPokemonData(Model model);
 
-    @GetMapping("/refresh")
-    String refreshPokemonData(Model model);
-
     @GetMapping
     String getPokemonList(Model model);
 
