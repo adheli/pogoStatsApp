@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,6 +87,7 @@ public class PokemonEntryControllerImpl implements PokemonEntryController {
         List<EntryDto> pokemons = new ArrayList<>();
         entryService.getGreatLeague().forEach(entry1 -> pokemons.add(new EntryDto(entry1)));
         model.addAttribute("pokemons", pokemons);
+        model.addAttribute("leagueName", "Great League");
         return LEAGUES_PAGE;
     }
 
@@ -94,6 +96,7 @@ public class PokemonEntryControllerImpl implements PokemonEntryController {
         List<EntryDto> pokemons = new ArrayList<>();
         entryService.getUltraLeague().forEach(entry1 -> pokemons.add(new EntryDto(entry1)));
         model.addAttribute("pokemons", pokemons);
+        model.addAttribute("leagueName", "Ultra League");
         return LEAGUES_PAGE;
     }
 
@@ -102,18 +105,23 @@ public class PokemonEntryControllerImpl implements PokemonEntryController {
         List<EntryDto> pokemons = new ArrayList<>();
         entryService.getMasterLeague().forEach(entry1 -> pokemons.add(new EntryDto(entry1)));
         model.addAttribute("pokemons", pokemons);
+        model.addAttribute("leagueName", "Master League");
         return LEAGUES_PAGE;
     }
 
     @Override
     public String getLeagues(Model model) {
+        List<EntryDto> pokemons = new ArrayList<>();
+        entryService.getGreatLeague().forEach(entry1 -> pokemons.add(new EntryDto(entry1)));
+        model.addAttribute("pokemons", pokemons);
+        model.addAttribute("leagueName", "Great League");
         return LEAGUES_PAGE;
     }
 
     @Override
-    public ModelAndView deletePokemonEntry(String entryId, Model model) {
+    public ModelAndView deletePokemonEntry(String entryId, RedirectAttributes redirAttrs) {
         entryService.deleteEntry(Integer.valueOf(entryId));
-
+        redirAttrs.addFlashAttribute("successMessage", "Pokemon entry deleted!");
         return redirectMyPokemonList();
     }
 
@@ -133,12 +141,6 @@ public class PokemonEntryControllerImpl implements PokemonEntryController {
     }
 
     private ModelAndView redirectMyPokemonList() {
-        List<EntryDto> pokemons = new ArrayList<>();
-        entryService.getEntries().forEach(e -> pokemons.add(new EntryDto(e)));
-
-        Map<String, Object> attributes = new HashMap<>();
-        attributes.put("pokemons", pokemons);
-
-        return new ModelAndView("redirect:/myPokemon", attributes);
+        return new ModelAndView("redirect:/myPokemon");
     }
 }

@@ -10,41 +10,42 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/myPokemon")
+@RequestMapping("/")
 public interface PokemonEntryController {
 
-    @GetMapping("/add")
+    @GetMapping("myPokemon/add")
     String addPokemonEntryForm(Model model);
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("myPokemon/edit/{entryId}")
     String editPokemonEntryForm(@PathVariable String entryId, Model model);
 
-    @PostMapping
+    @PostMapping("myPokemon")
     ModelAndView savePokemonEntry(@ModelAttribute EntryDto entry, Model model);
 
-    @GetMapping
+    @GetMapping("myPokemon")
     String getPokemonList(Model model);
 
-    @GetMapping("/legendary")
+    @GetMapping("myPokemon/legendary")
     String getLegendary(Model model);
 
-    @GetMapping("/shiny")
+    @GetMapping("myPokemon/shiny")
     String getShiny(Model model);
 
-    @GetMapping("/league/great")
+    @GetMapping("leagues/great")
     String getGreatLeagueCP(Model model);
 
-    @GetMapping("/league/ultra")
+    @GetMapping("leagues/ultra")
     String getUltraLeagueCP(Model model);
 
-    @GetMapping("/league/master")
+    @GetMapping("leagues/master")
     String getMasterLeagueCP(Model model);
 
-    @GetMapping("/leagues")
+    @GetMapping("leagues")
     String getLeagues(Model model);
 
-    @DeleteMapping("/delete/{id}")
-    ModelAndView  deletePokemonEntry(@PathVariable String entryId, Model model);
+    @GetMapping("myPokemon/delete/{entryId}")
+    ModelAndView deletePokemonEntry(@PathVariable String entryId, RedirectAttributes redirAttrs);
 }

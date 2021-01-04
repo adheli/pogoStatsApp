@@ -5,7 +5,8 @@
 <head>
     <title>PoGo Stats</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
@@ -35,23 +36,37 @@
 </header>
 
 <div class="container" style="padding-top: 10%;">
-    <div class="d-grid gap-2 col-6 mx-auto">
-        <a class="btn btn-outline-success" th:href="@{/myPokemon/add}">Add Pokemon Entry</a>
+    <div class="alert alert-success" th:if="${not #strings.isEmpty(successMessage)}">
+        <p th:text="${successMessage}"></p>
     </div>
 
-    <div class="container" th:if="${not #lists.isEmpty(pokemons)}">
-        <div class="row">
-            <h2>My Pokemons</h2>
+    <div class="row" style="padding: 10px;">
+        <h4>My Pokemons</h4>
+    </div>
+
+    <div class="row" style="padding: 10px;">
+        <div class="col-6">
+            <a class="btn btn-outline-secondary" th:href="@{/myPokemon/legendary}">Only Legendary</a>
+            <a class="btn btn-outline-warning" th:href="@{/myPokemon/shiny}">Only Shiny</a>
+            <a class="btn btn-outline-primary" th:href="@{/myPokemon}">All</a>
         </div>
+        <div class="col-6">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a class="btn btn-outline-success" th:href="@{/myPokemon/add}">Add Pokemon Entry</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="padding: 10px;" th:if="${not #lists.isEmpty(pokemons)}">
         <div class="row">
-            <table class="table table-bordered">
+            <table class="table table-bordered" style="text-align: center;">
                 <thead>
                 <tr>
                     <th>ENTRY #</th>
                     <th>NAME</th>
                     <th>CP</th>
                     <th>SHINY</th>
-                    <th>*</th>
+                    <th colspan="2" >*</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,8 +76,10 @@
                     <td th:text="${entry.currentCp}">me</td>
                     <td><i class="fas fa-gem text-warning" th:if="${#bools.isTrue(entry.shiny)}"></i></td>
                     <td>
-                        <a href="#" th:href="@{'/myPokemon/edit/' + ${entry.entryId}}">edit</a>
-                        <a href="#" th:href="@{'/myPokemon/delete/' + ${entry.entryId}}">delete</a>
+                        <a href="#" th:href="@{'/myPokemon/edit/' + ${entry.entryId}}"><i class="fas fa-edit"></i></a>
+                    </td>
+                    <td>
+                        <a href="#" th:href="@{'/myPokemon/delete/' + ${entry.entryId}}"><i class="far fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 </tbody>
@@ -76,7 +93,9 @@
         <span class="text-muted">Adheli Tavares. 2021. MIT License</span>
     </div>
 </footer>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

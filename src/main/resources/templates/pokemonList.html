@@ -5,7 +5,8 @@
 <head>
     <title>PoGo Stats</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
@@ -62,12 +63,8 @@
                     <tr th:each="pokemon : ${pokemons}">
                         <td th:text="${pokemon.dexEntry}"></td>
                         <td th:text="${pokemon.name}">me</td>
-                        <td th:if="${#bools.isTrue(pokemon.released)}"><i
-                                class="far fa-calendar-check text-success"></i></td>
-                        <td th:unless="${#bools.isTrue(pokemon.released)}"></td>
-                        <td th:if="${#bools.isTrue(pokemon.legendary)}"><i class="fab fa-github text-secondary"></i>
-                        </td>
-                        <td th:unless="${#bools.isTrue(pokemon.legendary)}"></td>
+                        <td><i class="far fa-calendar-check text-success" th:if="${#bools.isTrue(pokemon.released)}"></i></td>
+                        <td><i class="fab fa-github text-secondary" th:if="${#bools.isTrue(pokemon.legendary)}"></i></td>
                         <td><i class="fas fa-gem text-warning" th:if="${#bools.isTrue(pokemon.shinyReleased)}"></i></td>
                     </tr>
                     </tbody>
@@ -81,5 +78,8 @@
         <span class="text-muted">Adheli Tavares. 2021. MIT License</span>
     </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
 </body>
 </html>

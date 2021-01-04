@@ -5,7 +5,8 @@
 <head>
     <title>PoGo Stats</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" type="text/css" media="all" href="../../css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 </head>
 
 <body>
@@ -37,36 +38,52 @@
         <h2><span th:utext="${action}"></span> Pokemon Entry</h2>
 
         <div th:if="${#strings.equalsIgnoreCase('add', action)}">
-            <form class="row" action="#" th:action="@{/myPokemon}" th:object="${entry}" method="post">
-                <div>
+            <form class="row g-3" action="#" th:action="@{/myPokemon}" th:object="${entry}" method="post">
+                <div class="col-12">
                     <label for="pokemonList" class="form-label">Pokemon</label>
-                    <input th:field="*{pokemonId}" class="form-control" list="datalistOptions" id="pokemonList" placeholder="Type to search...">
+                    <input th:field="*{pokemonId}" class="form-control" list="datalistOptions" id="pokemonList"
+                           placeholder="Type to search...">
                     <datalist id="datalistOptions">
-                        <option th:each="pokemon : ${pokemons}" th:value="${pokemon.id}" th:text="${pokemon.name}">
+                        <option th:each="pokemon : ${pokemons}" th:value="${pokemon.id}" th:text="${pokemon.name}" >
                         </option>
                     </datalist>
                 </div>
-                <div>
+                <div class="col-12">
                     <label for="cpInput" class="form-label">Combat Power (CP)</label>
                     <input id="cpInput" type="text" class="form-control" th:field="*{currentCp}">
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck" th:field="*{shiny}">
-                    <label class="form-check-label" for="gridCheck">
-                        Shiny
-                    </label>
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck" th:field="*{shiny}">
+                        <label class="form-check-label" for="gridCheck">
+                            Shiny
+                        </label>
+                    </div>
                 </div>
                 <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
             </form>
         </div>
 
         <div th:if="${#strings.equalsIgnoreCase('edit', action)}">
-            <form class="row" action="#" th:action="@{/myPokemon}" th:object="${entry}" method="post">
+            <form class="row g-3" action="#" th:action="@{/myPokemon}" th:object="${entry}" method="post">
                 <input type="text" hidden th:field="*{entryId}"/>
                 <input type="text" hidden th:field="*{pokemonId}"/>
-                <p>Pokemon: <input type="text" disabled th:field="*{pokemonName}"/></p>
-                <p>Shiny: <input type="checkbox" disabled th:field="*{shiny}"/></p>
-                <p>Combat Power (CP): <input type="text" th:field="*{currentCp}"/></p>
+                <div class="col-12">
+                    <label for="pokemonName" class="form-label">Pokemon</label>
+                    <input th:field="*{pokemonName}" class="form-control" id="pokemonName" disabled>
+                </div>
+                <div class="col-12">
+                    <label for="cpEdit" class="form-label">Combat Power (CP)</label>
+                    <input id="cpEdit" type="text" class="form-control" th:field="*{currentCp}">
+                </div>
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkEdit" th:field="*{shiny}">
+                        <label class="form-check-label" for="checkEdit">
+                            Shiny
+                        </label>
+                    </div>
+                </div>
                 <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
             </form>
         </div>
@@ -78,5 +95,8 @@
         <span class="text-muted">Adheli Tavares. 2021. MIT License</span>
     </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
 </body>
 </html>
