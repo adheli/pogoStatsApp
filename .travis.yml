@@ -1,0 +1,4 @@
+language: java
+script: ./mvnw install -B -V
+jdk:
+  - openjdk8
