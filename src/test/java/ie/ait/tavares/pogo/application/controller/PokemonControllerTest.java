@@ -1,11 +1,10 @@
 package ie.ait.tavares.pogo.application.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ie.ait.tavares.pogo.application.dto.PokemonDto;
 import ie.ait.tavares.pogo.model.entity.Pokemon;
 import ie.ait.tavares.pogo.model.service.PokemonService;
-import ie.ait.tavares.pogo.rapid.api.PokemonGoApiModel;
-import ie.ait.tavares.pogo.rapid.api.PokemonGoApiService;
+import ie.ait.tavares.pogo.external.api.rapid.PokemonGoApiModel;
+import ie.ait.tavares.pogo.external.api.rapid.PokemonGoApiService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

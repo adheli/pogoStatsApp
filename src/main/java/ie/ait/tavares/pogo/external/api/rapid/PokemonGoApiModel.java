@@ -1,4 +1,4 @@
-package ie.ait.tavares.pogo.rapid.api;
+package ie.ait.tavares.pogo.external.api.rapid;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

@@ -1,4 +1,4 @@
-package ie.ait.tavares.pogo.rapid.api;
+package ie.ait.tavares.pogo.external.api.rapid;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

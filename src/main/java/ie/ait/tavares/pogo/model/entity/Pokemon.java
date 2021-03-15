@@ -35,7 +35,4 @@ public class Pokemon {
     @Column(nullable = false)
     private boolean shinyReleased;;
 
-    @OneToMany(mappedBy = "pokemon")
-    private List<PokemonEntry> entries;
-
 }

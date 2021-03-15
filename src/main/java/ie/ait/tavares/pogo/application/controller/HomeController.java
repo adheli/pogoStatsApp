@@ -9,6 +9,7 @@ public class HomeController {
 
     @RequestMapping({"/", "/home"})
     public String getHome(Model model) {
-        return "home";
+        model.addAttribute("hi", "hello");
+        return "redirect:/pvp";
     }
 }

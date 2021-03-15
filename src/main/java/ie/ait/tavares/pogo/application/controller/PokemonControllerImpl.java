@@ -1,10 +1,10 @@
 package ie.ait.tavares.pogo.application.controller;
 
 import ie.ait.tavares.pogo.application.dto.PokemonDto;
+import ie.ait.tavares.pogo.external.api.rapid.PokemonGoApiModel;
+import ie.ait.tavares.pogo.external.api.rapid.PokemonGoApiService;
 import ie.ait.tavares.pogo.model.entity.Pokemon;
 import ie.ait.tavares.pogo.model.service.PokemonService;
-import ie.ait.tavares.pogo.rapid.api.PokemonGoApiModel;
-import ie.ait.tavares.pogo.rapid.api.PokemonGoApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +22,7 @@ public class PokemonControllerImpl implements PokemonController {
     private final PokemonGoApiService api;
 
     private static final String POKEMON_LIST_PAGE = "pokemonList";
+    private static final String POKEMONS_TAG = "pokemons";
 
     @Autowired
     public PokemonControllerImpl(PokemonService service, PokemonGoApiService api) {
@@ -38,7 +39,7 @@ public class PokemonControllerImpl implements PokemonController {
                 loadPokemonFromApi();
                 pokemons = getPokemons();
             }
-            model.addAttribute("pokemons", pokemons);
+            model.addAttribute(POKEMONS_TAG, pokemons);
             return "redirect:/pokemon";
         } catch (IOException e) {
             model.addAttribute("errorMessage", e.getMessage());
@@ -49,28 +50,28 @@ public class PokemonControllerImpl implements PokemonController {
     @Override
     public String getPokemonList(Model model) {
         List<PokemonDto> pokemons = getPokemons();
-        model.addAttribute("pokemons", pokemons);
+        model.addAttribute(POKEMONS_TAG, pokemons);
         return POKEMON_LIST_PAGE;
     }
 
     @Override
     public String getLegendary(Model model) {
         List<PokemonDto> pokemons = getLegendaryPokemons();
-        model.addAttribute("pokemons", pokemons);
+        model.addAttribute(POKEMONS_TAG, pokemons);
         return POKEMON_LIST_PAGE;
     }
 
     @Override
     public String getShiny(Model model) {
         List<PokemonDto> pokemons = getShinyPokemons();
-        model.addAttribute("pokemons", pokemons);
+        model.addAttribute(POKEMONS_TAG, pokemons);
         return POKEMON_LIST_PAGE;
     }
 
     @Override
     public String getReleased(Model model) {
         List<PokemonDto> pokemons = getOnlyReleasedPokemons();
-        model.addAttribute("pokemons", pokemons);
+        model.addAttribute(POKEMONS_TAG, pokemons);
         return POKEMON_LIST_PAGE;
     }
 
