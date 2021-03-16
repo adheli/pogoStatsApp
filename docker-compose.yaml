@@ -12,7 +12,7 @@ services:
     restart: always
 
   pogostats: #it is just a name, which will be used only in this file.
-    image: pogostats               #name of the image after dockerfile executes
+    image: dedeli1989/pogostats:latest               #name of the image after dockerfile executes
     container_name: pogostats-app  #name of the container created from docker image
     build:
       context: .                          #docker file path (. means root directory)
@@ -27,3 +27,4 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/pogoapp?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: somepass
+      SPRING_PROFILES_ACTIVE: docker
