@@ -1,16 +1,19 @@
 package ie.ait.tavares.pogo.application.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ie.ait.tavares.pogo.model.entity.Pokemon;
-import ie.ait.tavares.pogo.model.service.PokemonService;
+import ie.ait.tavares.pogo.application.LoadPvpStatsInfo;
 import ie.ait.tavares.pogo.external.api.rapid.PokemonGoApiModel;
 import ie.ait.tavares.pogo.external.api.rapid.PokemonGoApiService;
+import ie.ait.tavares.pogo.model.entity.Pokemon;
+import ie.ait.tavares.pogo.model.service.PokemonService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.ui.ConcurrentModel;
@@ -23,76 +26,88 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 @SpringBootTest
 @ActiveProfiles("test")
 class PokemonControllerTest {
-    @MockBean
+
     PokemonService service;
-
-    @MockBean
     PokemonGoApiService api;
-
-    @Autowired
     PokemonControllerImpl controller;
 
     Model model = new ConcurrentModel();
 
+    @BeforeEach
+    void openMocks() {
+        service = mock(PokemonService.class);
+        api = mock(PokemonGoApiService.class);
+        controller = new PokemonControllerImpl(service, api);
+    }
+
+
     @Test
     void createPokemonData() throws IOException {
-        Mockito.when(service.getPokemonList()).thenReturn(new ArrayList<>()).thenReturn(mockListSavedPokemon());
-        Mockito.when(api.getPokemonList()).thenReturn(mockOriginalPokemonList());
-        Mockito.when(api.getShinyPokemonList()).thenReturn(mockShinyList());
-        Mockito.when(api.getReleasedPokemonList()).thenReturn(mockReleasedPokemon());
-        Mockito.when(api.getRarityPokemonList()).thenReturn(mockRarityList());
+        when(service.getPokemonList()).thenReturn(new ArrayList<>()).thenReturn(mockListSavedPokemon());
+        when(api.getPokemonList()).thenReturn(mockOriginalPokemonList());
+        when(api.getShinyPokemonList()).thenReturn(mockShinyList());
+        when(api.getReleasedPokemonList()).thenReturn(mockReleasedPokemon());
+        when(api.getRarityPokemonList()).thenReturn(mockRarityList());
 
         controller.createPokemonData(model);
-        Assertions.assertNotNull(model);
-        Assertions.assertNotNull(model.getAttribute("pokemons"));
+        assertNotNull(model);
+        assertNotNull(model.getAttribute("pokemons"));
     }
 
     @Test
     void getPokemonList() throws IOException {
-        Mockito.when(service.getPokemonList()).thenReturn(mockListSavedPokemon());
+        when(service.getPokemonList()).thenReturn(mockListSavedPokemon());
 
         controller.getPokemonList(model);
-        Assertions.assertNotNull(model);
-        Assertions.assertNotNull(model.getAttribute("pokemons"));
+        assertNotNull(model);
+        assertNotNull(model.getAttribute("pokemons"));
     }
 
     @Test
     void testGetLegendary() throws IOException {
-        Mockito.when(service.getLegendaryPokemonList()).thenReturn(mockListSavedPokemon().stream().filter(Pokemon::isLegendary).collect(Collectors.toList()));
+        when(service.getLegendaryPokemonList())
+                .thenReturn(mockListSavedPokemon().stream().filter(Pokemon::isLegendary).collect(Collectors.toList()));
 
         controller.getLegendary(model);
-        Assertions.assertNotNull(model);
+        assertNotNull(model);
 
         List<Pokemon> list = (List<Pokemon>) model.getAttribute("pokemons");
-        Assertions.assertNotNull(list);
-        Assertions.assertEquals(2, list.size());
+        assertNotNull(list);
+        assertEquals(2, list.size());
     }
 
     @Test
     void testGetShiny() throws IOException {
-        Mockito.when(service.getShinyPokemonList()).thenReturn(mockListSavedPokemon().stream().filter(Pokemon::isShinyReleased).collect(Collectors.toList()));
+        when(service.getShinyPokemonList())
+                .thenReturn(mockListSavedPokemon().stream().filter(Pokemon::isShinyReleased).collect(Collectors.toList()));
 
         controller.getShiny(model);
-        Assertions.assertNotNull(model);
+        assertNotNull(model);
 
         List<Pokemon> list = (List<Pokemon>) model.getAttribute("pokemons");
-        Assertions.assertNotNull(list);
-        Assertions.assertEquals(7, list.size());
+        assertNotNull(list);
+        assertEquals(7, list.size());
     }
 
     @Test
     void testGetReleased() throws IOException {
-        Mockito.when(service.getReleasedPokemonList()).thenReturn(mockListSavedPokemon().stream().filter(Pokemon::isReleased).collect(Collectors.toList()));
+        when(service.getReleasedPokemonList())
+                .thenReturn(mockListSavedPokemon().stream().filter(Pokemon::isReleased).collect(Collectors.toList()));
 
         controller.getReleased(model);
-        Assertions.assertNotNull(model);
+        assertNotNull(model);
 
         List<Pokemon> list = (List<Pokemon>) model.getAttribute("pokemons");
-        Assertions.assertNotNull(list);
-        Assertions.assertEquals(11, list.size());
+        assertNotNull(list);
+        assertEquals(11, list.size());
     }
 
 
@@ -133,5 +148,13 @@ class PokemonControllerTest {
         return new ObjectMapper().readerForListOf(Pokemon.class).readValue(pokemonSaved);
     }
 
+    @Configuration
+    public static class TestConfiguration {
+        @Bean
+        @Primary
+        public LoadPvpStatsInfo configurationService() {
+            return mock(LoadPvpStatsInfo.class);
+        }
+    }
 
 }

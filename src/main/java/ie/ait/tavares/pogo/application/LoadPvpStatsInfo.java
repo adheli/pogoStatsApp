@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -36,6 +37,9 @@ public class LoadPvpStatsInfo implements ApplicationListener<ContextRefreshedEve
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        log.debug("Active profiles: {}",
+                Arrays.toString(contextRefreshedEvent.getApplicationContext()
+                        .getEnvironment().getActiveProfiles()));
         loadData();
     }
 

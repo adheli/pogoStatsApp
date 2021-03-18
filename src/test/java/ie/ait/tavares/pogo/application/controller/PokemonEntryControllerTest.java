@@ -1,17 +1,19 @@
 package ie.ait.tavares.pogo.application.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ie.ait.tavares.pogo.application.LoadPvpStatsInfo;
 import ie.ait.tavares.pogo.application.dto.EntryDto;
 import ie.ait.tavares.pogo.model.entity.Pokemon;
 import ie.ait.tavares.pogo.model.entity.PokemonEntry;
 import ie.ait.tavares.pogo.model.service.PokemonEntryService;
 import ie.ait.tavares.pogo.model.service.PokemonService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.ui.ConcurrentModel;
@@ -22,22 +24,29 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ActiveProfiles("test")
-public class PokemonEntryControllerTest {
-    @MockBean
-    PokemonEntryService service;
+class PokemonEntryControllerTest {
 
-    @MockBean
+    PokemonEntryService entryService;
     PokemonService pkmService;
-
-    @Autowired
     PokemonEntryControllerImpl controller;
 
     Model model = new ConcurrentModel();
+
+    @BeforeEach
+    void setup() {
+        entryService = mock(PokemonEntryService.class);
+        pkmService = mock(PokemonService.class);
+        controller = new PokemonEntryControllerImpl(pkmService, entryService);
+    }
 
     @Test
     void testSavePokemonEntry() {
@@ -46,81 +55,81 @@ public class PokemonEntryControllerTest {
         entryDto.setCurrentCp("320");
         entryDto.setShiny(true);
 
-        Mockito.when(pkmService.getPokemon(anyInt())).thenReturn(new Pokemon());
-        Mockito.when(service.saveEntry(any())).thenReturn(new PokemonEntry());
+        when(pkmService.getPokemon(anyInt())).thenReturn(new Pokemon());
+        when(entryService.saveEntry(any())).thenReturn(new PokemonEntry());
         Assertions.assertDoesNotThrow(() -> controller.savePokemonEntry(entryDto, model));
     }
 
     @Test
     void testGetPokemonList() throws IOException {
-        Mockito.when(service.getEntries()).thenReturn(mockListSavedPokemon());
+        when(entryService.getEntries()).thenReturn(mockListSavedPokemon());
 
         controller.getPokemonList(model);
-        Assertions.assertNotNull(model);
+        assertNotNull(model);
 
         List<Pokemon> list = (List<Pokemon>) model.getAttribute("pokemons");
-        Assertions.assertNotNull(list);
-        Assertions.assertEquals(8, list.size());
+        assertNotNull(list);
+        assertEquals(8, list.size());
     }
 
     @Test
     void testGetLegendary() throws IOException {
-        Mockito.when(service.getMyLegendaries()).thenReturn(mockLegendary());
+        when(entryService.getMyLegendaries()).thenReturn(mockLegendary());
 
         controller.getLegendary(model);
-        Assertions.assertNotNull(model);
+        assertNotNull(model);
 
         List<Pokemon> list = (List<Pokemon>) model.getAttribute("pokemons");
-        Assertions.assertNotNull(list);
-        Assertions.assertEquals(2, list.size());
+        assertNotNull(list);
+        assertEquals(2, list.size());
     }
 
     @Test
     void testGetShiny() throws IOException {
-        Mockito.when(service.getMyShinies()).thenReturn(mockShiny());
+        when(entryService.getMyShinies()).thenReturn(mockShiny());
 
         controller.getShiny(model);
-        Assertions.assertNotNull(model);
+        assertNotNull(model);
 
         List<Pokemon> list = (List<Pokemon>) model.getAttribute("pokemons");
-        Assertions.assertNotNull(list);
-        Assertions.assertEquals(4, list.size());
+        assertNotNull(list);
+        assertEquals(4, list.size());
     }
 
     @Test
     void testGreatLeagueCP() throws IOException {
-        Mockito.when(service.getGreatLeague()).thenReturn(mockGreatLeague());
+        when(entryService.getGreatLeague()).thenReturn(mockGreatLeague());
 
         controller.getGreatLeagueCP(model);
-        Assertions.assertNotNull(model);
+        assertNotNull(model);
 
         List<Pokemon> list = (List<Pokemon>) model.getAttribute("pokemons");
-        Assertions.assertNotNull(list);
-        Assertions.assertEquals(4, list.size());
+        assertNotNull(list);
+        assertEquals(4, list.size());
     }
 
     @Test
     void testUltraLeagueCP() throws IOException {
-        Mockito.when(service.getUltraLeague()).thenReturn(mockUltraLeague());
+        when(entryService.getUltraLeague()).thenReturn(mockUltraLeague());
 
         controller.getUltraLeagueCP(model);
-        Assertions.assertNotNull(model);
+        assertNotNull(model);
 
         List<Pokemon> list = (List<Pokemon>) model.getAttribute("pokemons");
-        Assertions.assertNotNull(list);
-        Assertions.assertEquals(2, list.size());
+        assertNotNull(list);
+        assertEquals(2, list.size());
     }
 
     @Test
     void testMasterLeagueCP() throws IOException {
-        Mockito.when(service.getMasterLeague()).thenReturn(mockMasterLeague());
+        when(entryService.getMasterLeague()).thenReturn(mockMasterLeague());
 
         controller.getMasterLeagueCP(model);
-        Assertions.assertNotNull(model);
+        assertNotNull(model);
 
         List<Pokemon> list = (List<Pokemon>) model.getAttribute("pokemons");
-        Assertions.assertNotNull(list);
-        Assertions.assertEquals(2, list.size());
+        assertNotNull(list);
+        assertEquals(2, list.size());
     }
 
     private List<PokemonEntry> mockMasterLeague() throws IOException {
@@ -146,5 +155,14 @@ public class PokemonEntryControllerTest {
 
     private List<PokemonEntry> mockUltraLeague() throws IOException {
         return mockListSavedPokemon().stream().filter(entry -> entry.getCombatPower() > 1500 && entry.getCombatPower() <= 2500).collect(Collectors.toList());
+    }
+
+    @Configuration
+    public static class TestConfiguration {
+        @Bean
+        @Primary
+        public LoadPvpStatsInfo configurationService() {
+            return mock(LoadPvpStatsInfo.class);
+        }
     }
 }
