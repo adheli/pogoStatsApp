@@ -1,6 +1,4 @@
 # PoGo Stats
-[![Build Status](https://travis-ci.org/adheli/pogoStatsApp.svg?branch=main)](https://travis-ci.org/adheli/pogoStatsApp)
-
 This is a simple web app to match your PoGo pokemon with current released Pokemons and their version
 
   - Check for legendary and shiny releases
